@@ -65,6 +65,23 @@
       width: 0%;
     }
 
+    .next-button {
+      background-color: white;
+      border: 2px solid black;
+      color: black;
+      padding: 15px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+      cursor: pointer;
+      font-family: serif;
+    }
+
+    .next-button:active {
+      background-color: black;
+      color: white;
+    }
+
     /* Kindle-specific optimizations */
     @media screen and (max-width: 600px) {
       .arabic-name {
@@ -82,6 +99,11 @@
       .counter {
         font-size: 14px;
       }
+      
+      .next-button {
+        padding: 12px 24px;
+        font-size: 16px;
+      }
     }
   </style>
 </head>
@@ -96,6 +118,7 @@
     <div class="progress-bar">
       <div class="progress-fill" id="progressFill"></div>
     </div>
+    <button class="next-button" id="nextButton">Next Name</button>
   </div>
 
   <script>
@@ -208,6 +231,7 @@
     var meaningElement = document.getElementById('meaning');
     var counterElement = document.getElementById('counter');
     var progressFillElement = document.getElementById('progressFill');
+    var nextButton = document.getElementById('nextButton');
     var progressWidth = 0;
 
     function displayName(index) {
@@ -235,6 +259,11 @@
       currentIndex = (currentIndex + 1) % names.length;
       displayName(currentIndex);
     }
+
+    // Add button click handler
+    nextButton.onclick = function() {
+      nextName();
+    };
 
     // Initialize with first name
     displayName(0);
