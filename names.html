@@ -40,13 +40,13 @@
     }
 
     .meaning {
-      font-size: 48px;
+      font-size: 72px;
       font-style: italic;
       margin-top: 10px;
     }
 
     .counter {
-      font-size: 48px;
+      font-size: 60px;
       margin-top: 20px;
       font-weight: bold;
     }
@@ -118,7 +118,6 @@
     <div class="progress-bar">
       <div class="progress-fill" id="progressFill"></div>
     </div>
-    <button class="next-button" id="nextButton">Next Name</button>
   </div>
 
   <script>
@@ -231,7 +230,6 @@
     var meaningElement = document.getElementById('meaning');
     var counterElement = document.getElementById('counter');
     var progressFillElement = document.getElementById('progressFill');
-    var nextButton = document.getElementById('nextButton');
     var progressWidth = 0;
 
     function displayName(index) {
@@ -254,16 +252,6 @@
         setTimeout(updateProgress, 200);
       }
     }
-
-    function nextName() {
-      currentIndex = (currentIndex + 1) % names.length;
-      displayName(currentIndex);
-    }
-
-    // Add button click handler
-    nextButton.onclick = function() {
-      nextName();
-    };
 
     // Initialize with first name
     displayName(0);
