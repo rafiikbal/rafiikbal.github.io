@@ -6,11 +6,6 @@
   <title>99 Names of Allah - Asma al-Husna</title>
   <style>
     body {
-      margin: 0;
-      padding: 10px;
-      font-family: serif;
-      background: white;
-      color: black;
       text-align: center;
     }
 
@@ -20,35 +15,8 @@
       padding: 20px;
     }
 
-    .name-display {
-      margin-bottom: 30px;
-      padding: 20px 0;
-    }
-
-    .arabic-name {
-      font-size: 144px;
-      margin-bottom: 15px;
-      font-family: serif;
-      font-weight: bold;
-      line-height: 1.2;
-    }
-
-    .english-name {
-      font-size: 96px;
-      font-weight: normal;
-      margin-bottom: 10px;
-    }
-
-    .meaning {
-      font-size: 56px;
-      font-style: italic;
-      margin-top: 10px;
-    }
-
-    .counter {
-      font-size: 48px;
-      margin-top: 20px;
-      font-weight: bold;
+    h1 {
+        font-size: 72px;
     }
 
     .progress-bar {
@@ -65,54 +33,14 @@
       width: 0%;
     }
 
-    .next-button {
-      background-color: white;
-      border: 2px solid black;
-      color: black;
-      padding: 15px 30px;
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 20px;
-      cursor: pointer;
-      font-family: serif;
-    }
-
-    .next-button:active {
-      background-color: black;
-      color: white;
-    }
-
-    /* Kindle-specific optimizations */
-    @media screen and (max-width: 600px) {
-      .arabic-name {
-        font-size: 36px;
-      }
-      
-      .english-name {
-        font-size: 20px;
-      }
-      
-      .meaning {
-        font-size: 16px;
-      }
-      
-      .counter {
-        font-size: 14px;
-      }
-      
-      .next-button {
-        padding: 12px 24px;
-        font-size: 16px;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="name-display">
-      <div class="arabic-name" id="arabicName">الله</div>
-      <div class="english-name" id="englishName">Allah</div>
-      <div class="meaning" id="meaning">The Greatest Name</div>
+      <h1 id="arabicName">الله</h1>
+      <h2 id="englishName">Allah</h2>
+      <h5 id="meaning">The Greatest Name</h5>
     </div>
     <div class="counter" id="counter">1 of 99</div>
     <div class="progress-bar">
@@ -254,7 +182,12 @@
     }
 
     function nextName() {
-      currentIndex = (currentIndex + 1) % names.length;
+      var newIndex;
+      do {
+        newIndex = Math.floor(Math.random() * names.length);
+      } while (newIndex === currentIndex);
+      
+      currentIndex = newIndex;
       displayName(currentIndex);
     }
 
