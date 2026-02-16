@@ -253,6 +253,11 @@
       }
     }
 
+    function nextName() {
+      currentIndex = (currentIndex + 1) % names.length;
+      displayName(currentIndex);
+    }
+
     // Initialize with first name
     displayName(0);
 
