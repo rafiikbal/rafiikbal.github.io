@@ -251,7 +251,7 @@
       if (progressWidth < 100) {
         progressWidth += 1;
         progressFillElement.style.width = progressWidth + '%';
-        setTimeout(updateProgress, 100);
+        setTimeout(updateProgress, 200);
       }
     }
 
@@ -268,8 +268,8 @@
     // Initialize with first name
     displayName(0);
 
-    // Set interval to change names every 10 seconds
-    setInterval(nextName, 10000);
+    // Set interval to change names every 20 seconds
+    setInterval(nextName, 20000);
   </script>
 </body>
 </html>
