@@ -57,6 +57,39 @@
       width: 0%;
     }
 
+    .complete-dua {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .complete-dua h3 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .all-verses {
+      font-size: 32px;
+      line-height: 1.6;
+      direction: rtl;
+      text-align: center;
+      color: #444;
+      max-width: 90%;
+      margin: 0 auto;
+    }
+
+    .verse-line {
+      margin-bottom: 15px;
+      padding: 5px;
+    }
+
+    .current-verse {
+      background-color: #f0f0f0;
+      font-weight: bold;
+      color: black;
+      border-radius: 5px;
+    }
+
     @media screen and (max-width: 600px) {
       .arabic-verse {
         font-size: 56px;
@@ -78,6 +111,11 @@
     <div class="progress-bar">
       <div class="progress-fill" id="progressFill"></div>
     </div>
+    
+    <div class="complete-dua">
+      <h3>دعاء القنوت كاملاً</h3>
+      <div class="all-verses" id="allVerses"></div>
+    </div>
   </div>
 
   <script>
@@ -97,11 +135,31 @@
     var arabicVerseElement = document.getElementById('arabicVerse');
     var counterElement = document.getElementById('counter');
     var progressFillElement = document.getElementById('progressFill');
+    var allVersesElement = document.getElementById('allVerses');
     var progressWidth = 0;
+
+    // Create and display all verses
+    function initializeAllVerses() {
+      var versesHTML = '';
+      for (var i = 0; i < qunootVerses.length; i++) {
+        versesHTML += '<div class="verse-line" id="verse-' + i + '">' + qunootVerses[i] + '</div>';
+      }
+      allVersesElement.innerHTML = versesHTML;
+    }
 
     function displayVerse(index) {
       arabicVerseElement.innerHTML = qunootVerses[index];
       counterElement.innerHTML = (index + 1) + ' من ' + qunootVerses.length;
+      
+      // Highlight current verse in the complete dua
+      for (var i = 0; i < qunootVerses.length; i++) {
+        var verseElement = document.getElementById('verse-' + i);
+        if (i === index) {
+          verseElement.className = 'verse-line current-verse';
+        } else {
+          verseElement.className = 'verse-line';
+        }
+      }
       
       // Reset progress bar
       progressWidth = 0;
@@ -127,6 +185,7 @@
     }
 
     // Initialize with first verse
+    initializeAllVerses();
     displayVerse(0);
 
     // Set interval to auto-progress every 20 seconds
