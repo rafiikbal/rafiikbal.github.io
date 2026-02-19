@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دعاء القنوت - Dua al-Qunoot</title>
+  <style>
+    body {
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      font-family: "Times New Roman", serif;
+      background-color: white;
+      color: black;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .container {
+      width: 95%;
+      height: 95vh;
+      margin: 0 auto;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .verse-display {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 10px;
+    }
+
+    .arabic-verse {
+      font-size: 48px;
+      line-height: 1.4;
+      font-weight: bold;
+      text-align: center;
+      direction: rtl;
+      word-spacing: 8px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+      font-size: 24px;
+    }
+
+    .nav-button {
+      background: black;
+      color: white;
+      border: 2px solid black;
+      padding: 15px 25px;
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .nav-button:hover {
+      background: white;
+      color: black;
+    }
+
+    .nav-button:disabled {
+      background: #ccc;
+      color: #666;
+      border-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .counter {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background-color: #ccc;
+      border: 1px solid black;
+      margin: 10px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: black;
+      transition: width 0.3s ease;
+    }
+
+    @media screen and (max-width: 600px) {
+      .arabic-verse {
+        font-size: 36px;
+      }
+      .nav-button {
+        padding: 12px 20px;
+        font-size: 16px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="verse-display">
+      <div class="arabic-verse" id="arabicVerse">اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْت</div>
+    </div>
+    
+    <div class="controls">
+      <button class="nav-button" id="prevBtn" onclick="previousVerse()">← السابق</button>
+      <div class="counter" id="counter">1 من 9</div>
+      <button class="nav-button" id="nextBtn" onclick="nextVerse()">التالي →</button>
+    </div>
+    
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <script>
+    const qunootVerses = [
+      "اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْت",
+      "وَعَافِنِي فِيمَنْ عَافَيْت",
+      "وَتَوَلَّنِي فِيمَنْ تَوَلَّيْت",
+      "وَبَارِكْ لِي فِيمَا أَعْطَيْت",
+      "وَقِنِي شَرَّ مَا قَضَيْت",
+      "فَإِنَّكَ تَقْضِي وَلَا يُقْضَى عَلَيْك",
+      "وَإِنَّهُ لَا يَذِلُّ مَنْ وَالَيْت",
+      "وَلَا يَعِزُّ مَنْ عَادَيْت",
+      "تَبَارَكْتَ رَبَّنَا وَتَعَالَيْت"
+    ];
+
+    let currentIndex = 0;
+    const arabicVerseElement = document.getElementById('arabicVerse');
+    const counterElement = document.getElementById('counter');
+    const progressFillElement = document.getElementById('progressFill');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function displayVerse(index) {
+      arabicVerseElement.textContent = qunootVerses[index];
+      counterElement.textContent = `${index + 1} من ${qunootVerses.length}`;
+      
+      // Update progress bar
+      const progress = ((index + 1) / qunootVerses.length) * 100;
+      progressFillElement.style.width = progress + '%';
+      
+      // Update button states
+      prevBtn.disabled = (index === 0);
+      nextBtn.disabled = (index === qunootVerses.length - 1);
+    }
+
+    function nextVerse() {
+      if (currentIndex < qunootVerses.length - 1) {
+        currentIndex++;
+        displayVerse(currentIndex);
+      }
+    }
+
+    function previousVerse() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        displayVerse(currentIndex);
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+      switch(event.key) {
+        case 'ArrowLeft':
+        case 'ArrowUp':
+          previousVerse();
+          break;
+        case 'ArrowRight':
+        case 'ArrowDown':
+        case ' ':
+          nextVerse();
+          break;
+        case 'Home':
+          currentIndex = 0;
+          displayVerse(currentIndex);
+          break;
+        case 'End':
+          currentIndex = qunootVerses.length - 1;
+          displayVerse(currentIndex);
+          break;
+      }
+    });
+
+    // Touch/swipe support for mobile devices
+    let startX = 0;
+    let startY = 0;
+
+    document.addEventListener('touchstart', function(event) {
+      startX = event.touches[0].clientX;
+      startY = event.touches[0].clientY;
+    });
+
+    document.addEventListener('touchend', function(event) {
+      const endX = event.changedTouches[0].clientX;
+      const endY = event.changedTouches[0].clientY;
+      const deltaX = endX - startX;
+      const deltaY = endY - startY;
+
+      // Minimum swipe distance
+      if (Math.abs(deltaX) > 50 || Math.abs(deltaY) > 50) {
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+          // Horizontal swipe
+          if (deltaX > 0) {
+            previousVerse(); // Swipe right = previous (RTL)
+          } else {
+            nextVerse(); // Swipe left = next (RTL)
+          }
+        } else {
+          // Vertical swipe
+          if (deltaY < 0) {
+            nextVerse(); // Swipe up = next
+          } else {
+            previousVerse(); // Swipe down = previous
+          }
+        }
+      }
+    });
+
+    // Initialize with first verse
+    displayVerse(0);
+  </script>
+</body>
+</html>
