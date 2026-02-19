@@ -101,7 +101,7 @@
 
     function displayVerse(index) {
       arabicVerseElement.innerHTML = qunootVerses[index];
-      counterElement.innerHTML = `${index + 1} من ${qunootVerses.length}`;
+      counterElement.innerHTML = (index + 1) + ' من ' + qunootVerses.length;
       
       // Reset progress bar
       progressWidth = 0;
